@@ -28,10 +28,10 @@ Las lambdas permiten pasar funciones como argumentos de otras funciones (funcion
 
 ```kotlin
 fun main() {
-    val eCount = "develou.com".count({ char: Char -> char == 'e' })
-    print("Total 'e': $eCount")
+    val kCount = "kotlin.kts".count({ char: Char -> char == 'k' })
+    print("Total 'k': $eCount")
 }
-// Total 'e': 2
+// Total 'k': 2
 ```
 
 ---
@@ -43,13 +43,13 @@ fun main() {
 Si el lambda es el último argumento, las llaves pueden ir fuera del paréntesis:
 
 ```kotlin
-val eCount = "develou.com".count() { char: Char -> char == 'e' }
+val kCount = "kotlin.kts".count() { char: Char -> char == 'k' }
 ```
 
 Si los paréntesis quedan vacíos, se omiten completamente:
 
 ```kotlin
-val eCount = "develou.com".count { char: Char -> char == 'e' }
+val kCount = "kotlin.kts".count { char: Char -> char == 'k' }
 ```
 
 ### Omitir el tipo del parámetro
@@ -57,7 +57,7 @@ val eCount = "develou.com".count { char: Char -> char == 'e' }
 Si el compilador puede inferir el tipo, se puede omitir:
 
 ```kotlin
-val eCount = "develou.com".count { char -> char == 'e' }
+val kCount = "kotlin.kts".count { char -> char == 'k' }
 ```
 
 ### El identificador `it`
@@ -65,7 +65,7 @@ val eCount = "develou.com".count { char -> char == 'e' }
 Cuando el lambda tiene un único argumento y no se necesita renombrarlo, se puede usar `it`:
 
 ```kotlin
-val eCount = "develou.com".count { it == 'e' }
+val kCount = "kotlin.kts".count { it == 'k' }
 ```
 
 ---
@@ -76,16 +76,16 @@ El cuerpo del lambda puede tener varias líneas. La **última expresión** es el
 
 ```kotlin
 fun main() {
-    val eCount = "develou.com".count {
+    val kCount = "kotlin.kts".count {
         println("Carácter $it")
-        it == 'e'
+        it == 'k'
     }
-    print("Total 'e': $eCount")
+    print("Total 'k': $kCount")
 }
-// Carácter d
-// Carácter e
-// Carácter v
-// Carácter e
+// Carácter k
+// Carácter o
+// Carácter t
+// Carácter l
 // ...
-// Total 'e': 2
+// Total 'k': 2
 ```
