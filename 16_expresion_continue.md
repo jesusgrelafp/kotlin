@@ -62,7 +62,7 @@ fun main() {
             if (d.toByte() + k.toByte() > 180) {
                 continue@Loop  
             }
-            print(" ($k,$d) ")
+            print("($k,$d)")
         }
         println()
     }
