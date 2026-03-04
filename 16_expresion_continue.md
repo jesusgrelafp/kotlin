@@ -54,20 +54,20 @@ Loop@ for (i in 1..5) {
 }
 ```
 
-**Ejemplo — imprimir parejas de caracteres de "Develou" y "Kotlin" cuya suma ASCII sea ≤ 180:**
+**Ejemplo — imprimir parejas de caracteres de "Compose" y "Kotlin" cuya suma ASCII sea ≤ 180:**
 ```kotlin
 fun main() {
-    Loop@ for (d in "Develou") {
+    Loop@ for (d in "Compose") {
         for (k in "Kotlin") {
             if (d.toByte() + k.toByte() > 180) {
-                continue@Loop  // Descarta la iteración de 'd' completa
+                continue@Loop  
             }
             print("($k,$d)")
         }
         println()
     }
 }
-// Salida: (K,D)(o,D)(K,e)(K,e)
+// Salida: (K,C)(o,C)(K,e)
 ```
 
-Al anotar el bucle externo con `Loop`, `continue@Loop` salta tanto el `print()` de la pareja como el `println()` exterior, descartando el carácter actual de "Develou" y pasando al siguiente.
+Al anotar el bucle externo con `Loop`, `continue@Loop` salta tanto el `print()` de la pareja como el `println()` exterior, descartando el carácter actual de "Compose" y pasando al siguiente.
