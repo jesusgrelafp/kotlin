@@ -82,7 +82,7 @@ Esto puedes lograrlo usando la sintaxis de triple doble comillas (`"""`) para en
 fun main() {
     // raw string
     val welcomeText = """
-    ¡Bienvenido a la guía de Kotlin de develou.com!
+    ¡Bienvenido a la guía de Kotlin!
     En esta serie de tutoriales aprenderás 
     los conceptos básicos sobre el lenguaje
     y las herramientas necesarias para probarlo
@@ -97,7 +97,7 @@ Como ves, la construcción del String con múltiples líneas conserva la sangrí
 fun main() {
     // raw string
     val welcomeText = """
-    |¡Bienvenido a la guía de Kotlin de develou.com!
+    |¡Bienvenido a la guía de Kotlin!
     |En esta serie de tutoriales aprenderás 
     |los conceptos básicos sobre el lenguaje
     |y las herramientas necesarias para probarlo
@@ -109,7 +109,7 @@ fun main() {
 Salida:
 
 ```
-¡Bienvenido a la guía de Kotlin de develou.com!
+¡Bienvenido a la guía de Kotlin!
 En esta serie de tutoriales aprenderás 
 los conceptos básicos sobre el lenguaje
 y las herramientas necesarias para probarlo
