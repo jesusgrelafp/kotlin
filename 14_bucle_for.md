@@ -99,16 +99,15 @@ El bucle `for` puede iterar sobre un string carácter a carácter.
 
 ```kotlin
 fun main() {
-    for (c in "Develou") {
+    for (c in "Kotlin") {
         println(c)
     }
 }
 // Salida:
-// D
-// e
-// v
-// e
-// l
+// K
 // o
-// u
+// t
+// l
+// i
+// n
 ```
