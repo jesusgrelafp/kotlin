@@ -47,6 +47,27 @@ Tamaño inicial: 0
 Tamaño tras asignar: 3
 ```
 
+**Ejemplo de `arrayOfNulls()`:** Útil cuando conoces el tamaño del arreglo pero vas a rellenar los valores más adelante:
+
+```kotlin
+fun main() {
+    val colors = arrayOfNulls<String>(3)
+    println(colors.contentToString())
+
+    colors[0] = "Rojo"
+    colors[1] = "Verde"
+    colors[2] = "Azul"
+    println(colors.contentToString())
+}
+```
+
+Salida:
+
+```
+[null, null, null]
+[Rojo, Verde, Azul]
+```
+
 ---
 
 ## Usar Constructor Array()
