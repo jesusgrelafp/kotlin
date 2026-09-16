@@ -2,6 +2,7 @@
 
 En este tutorial verás la definición, declaración y uso de Strings en Kotlin con el fin de representar texto como tipo básico en tus aplicaciones.
 
+
 ---
 
 ## El Tipo String
