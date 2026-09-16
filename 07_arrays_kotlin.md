@@ -1,22 +1,22 @@
 # Arrays En Kotlin
 
-En este tutorial discutiremos sobre el uso de Arrays en Kotlin con el fin de representar vectores (arreglos) en nuestras aplicaciones. Verás cómo crearlos, el acceso y modificación de sus elementos, y cómo recorrerlos.
+En este tutorial discutiremos sobre el uso de Arrays en Kotlin con el fin de representar vectores (arrays) en nuestras aplicaciones. Verás cómo crearlos, el acceso y modificación de sus elementos, y cómo recorrerlos.
 
 ---
 
 ## Crear Arrays
 
-Un arreglo es una estructura con valores de datos que están almacenados de forma contigua en memoria. Todos los elementos son referenciados por un mismo nombre y tienen el mismo tipo de dato.
+Un array es una estructura con valores de datos que están almacenados de forma contigua en memoria. Todos los elementos son referenciados por un mismo nombre y tienen el mismo tipo de dato.
 
-Los elementos estarán indexados tomando como base el `0` y el tamaño declarado del arreglo será fijo.
+Los elementos estarán indexados tomando como base el `0` y el tamaño declarado del array será fijo.
 
-Kotlin usa la clase genérica `Array<T>` para representar arreglos. Crear instancias con un tipo parametrizado usa los siguientes métodos:
+Kotlin usa la clase genérica `Array<T>` para representar arrays. Crear instancias con un tipo parametrizado usa los siguientes métodos:
 
-- `arrayOf<T>(vararg elements: T)` — recibe un argumento variable con elementos de tipo `T` y retorna el arreglo que los contiene.
-- `arrayOfNulls<T>(size: Int)` — crea un arreglo de tamaño `size` con elementos de tipo `T` e inicializa los valores con `null`.
-- `emptyArray<T>()` — crea un arreglo vacío con el tipo `T`.
+- `arrayOf<T>(vararg elements: T)` — recibe un argumento variable con elementos de tipo `T` y retorna el array que los contiene.
+- `arrayOfNulls<T>(size: Int)` — crea un array de tamaño `size` con elementos de tipo `T` e inicializa los valores con `null`.
+- `emptyArray<T>()` — crea un array vacío con el tipo `T`.
 
-**Por ejemplo:** Considera que necesitas almacenar el valor de los ingresos de 12 meses del usuario. En vez de crear 12 variables para cada mes, optas por crear un arreglo:
+**Por ejemplo:** Considera que necesitas almacenar el valor de los ingresos de 12 meses del usuario. En vez de crear 12 variables para cada mes, optas por crear un array:
 
 ```kotlin
 val income = arrayOf<Double>(
@@ -28,7 +28,7 @@ val income = arrayOf<Double>(
 
 > Al igual que cualquier declaración de instancias, puedes omitir el tipo parametrizado `<Double>` porque el compilador de Kotlin puede inferirlo.
 
-**Ejemplo de `emptyArray()`:** Útil cuando necesitas un valor por defecto o inicial antes de rellenar el arreglo más adelante:
+**Ejemplo de `emptyArray()`:** Útil cuando necesitas un valor por defecto o inicial antes de rellenar el array más adelante:
 
 ```kotlin
 fun main() {
@@ -47,7 +47,7 @@ Tamaño inicial: 0
 Tamaño tras asignar: 3
 ```
 
-**Ejemplo de `arrayOfNulls()`:** Útil cuando conoces el tamaño del arreglo pero vas a rellenar los valores más adelante:
+**Ejemplo de `arrayOfNulls()`:** Útil cuando conoces el tamaño del array pero vas a rellenar los valores más adelante:
 
 ```kotlin
 fun main() {
@@ -131,7 +131,7 @@ La tierra como está en la posición 3 sería asignada con `[2]` (índice base 0
 
 ## Recorrer Arrays
 
-Una de las formas más convencionales de recorrer arreglos es a través del bucle `for` con el operador `in` junto a la propiedad de extensión `indices`, que contiene el rango válido de los índices del array:
+Una de las formas más convencionales de recorrer arrays es a través del bucle `for` con el operador `in` junto a la propiedad de extensión `indices`, que contiene el rango válido de los índices del array:
 
 ```kotlin
 fun main() {
