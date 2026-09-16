@@ -107,7 +107,7 @@ val passwordSize = if (password != null) password.length else 0
 val passwordSize = password?.length ?: 0
 ```
 
-Si `a` no es `null`, entonces retornar `length`; de lo contrario `passwordSize` sería igual a cero.
+Si `password` no es `null`, entonces retornar `length`; de lo contrario `passwordSize` sería igual a cero.
 
 ---
 
