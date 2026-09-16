@@ -12,9 +12,9 @@ Los elementos estarán indexados tomando como base el `0` y el tamaño declarado
 
 Kotlin usa la clase genérica `Array<T>` para representar arreglos. Crear instancias con un tipo parametrizado usa los siguientes métodos:
 
-- `arrayOf(vararg elements: T)` — recibe un argumento variable con elementos de tipo `T` y retorna el arreglo que los contiene.
-- `arrayOfNulls(size: Int)` — crea un arreglo de tamaño `size` con elementos de tipo `T` e inicializa los valores con `null`.
-- `emptyArray()` — crea un arreglo vacío con el tipo `T`.
+- `arrayOf<T>(vararg elements: T)` — recibe un argumento variable con elementos de tipo `T` y retorna el arreglo que los contiene.
+- `arrayOfNulls<T>(size: Int)` — crea un arreglo de tamaño `size` con elementos de tipo `T` e inicializa los valores con `null`.
+- `emptyArray<T>()` — crea un arreglo vacío con el tipo `T`.
 
 **Por ejemplo:** Considera que necesitas almacenar el valor de los ingresos de 12 meses del usuario. En vez de crear 12 variables para cada mes, optas por crear un arreglo:
 
@@ -27,6 +27,25 @@ val income = arrayOf<Double>(
 ```
 
 > Al igual que cualquier declaración de instancias, puedes omitir el tipo parametrizado `<Double>` porque el compilador de Kotlin puede inferirlo.
+
+**Ejemplo de `emptyArray()`:** Útil cuando necesitas un valor por defecto o inicial antes de rellenar el arreglo más adelante:
+
+```kotlin
+fun main() {
+    var tags = emptyArray<String>()
+    println("Tamaño inicial: ${tags.size}")
+
+    tags = arrayOf("kotlin", "android", "dam")
+    println("Tamaño tras asignar: ${tags.size}")
+}
+```
+
+Salida:
+
+```
+Tamaño inicial: 0
+Tamaño tras asignar: 3
+```
 
 ---
 
