@@ -131,9 +131,6 @@ val edades = intArrayOf(23, 45, 12, 8)
 val activos = booleanArrayOf(true, false, true)
 ```
 
-> **Cuidado:** `arrayOf<Double>(5)` **no** es lo mismo que `DoubleArray(5)`. En `arrayOf`, el `5` no indica un tamaño, sino que se interpreta como un elemento del `vararg`, así que `arrayOf<Double>(5.0)` crea un array de **tamaño 1** con el valor `5.0`, no un array de tamaño 5. Para tipos primitivos con un tamaño dado, usa siempre el array especializado (`DoubleArray(5)`) o el constructor `Array(size, init)` visto antes.
-
----
 
 ## Acceso A Elementos
 
