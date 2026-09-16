@@ -65,3 +65,29 @@ toShort():7519
 ```
 
 Al no pertenecer al rango `Short.MIN_VALUE` y `Short.MAX_VALUE`, se usa el truncado con los 16 bits menos significativos del entero.
+
+### ¿Qué son los 16 bits menos significativos?
+
+Los bits menos significativos son los que están más a la derecha en la representación binaria de un número (los de menor peso), mientras que los más significativos están más a la izquierda (mayor peso). Al truncar de `Int` (32 bits) a `Short` (16 bits), simplemente se descartan los 16 bits más significativos (la mitad izquierda) y se conservan los 16 bits menos significativos (la mitad derecha), reinterpretándolos como un `Short` completo, incluyendo su propio bit de signo.
+
+**Ejemplo con `measure = 4005215`:**
+
+En binario (32 bits):
+
+```
+0000 0000 0011 1101 0001 1101 0101 1111
+```
+
+Se descartan los 16 bits más significativos (izquierda):
+
+```
+0000 0000 0011 1101
+```
+
+Y se conservan los 16 bits menos significativos (derecha), que pasan a formar el `Short` resultante:
+
+```
+0001 1101 0101 1111
+```
+
+Ese valor en decimal es **7519**, que coincide con el resultado de `measure.toShort()`. No se trata de un redondeo, sino de un corte directo de la mitad baja del número original.
