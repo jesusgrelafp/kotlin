@@ -108,6 +108,38 @@ fun main() {
 
 ---
 
+## Combinar condiciones de distinto tipo en una misma rama
+
+No solo se pueden agrupar literales; también se pueden mezclar comprobaciones de tipo, rangos y valores en la misma entrada separándolos con comas.
+
+```kotlin
+fun describir(x: Any) = when (x) {
+    is Int, is Long -> "Es un número entero"
+    in 1.0..10.0    -> "Es un decimal entre 1 y 10"
+    "", " "         -> "Está vacío o es un espacio"
+    else            -> "Otro tipo"
+}
+```
+
+---
+
+## Comprobar `null` en una rama
+
+Si el sujeto es de tipo *nullable*, se puede comprobar el caso `null` como una condición más.
+
+```kotlin
+fun main() {
+    val texto: String? = null
+    when (texto) {
+        null -> print("No hay texto")
+        else -> print("Longitud: ${texto.length}")
+    }
+}
+// Salida: No hay texto
+```
+
+---
+
 ## Usar `when` como `if` (sin argumento)
 
 Si no se necesita un valor de comparación, `when` puede escribirse sin argumento para comprobar expresiones booleanas.
@@ -121,6 +153,22 @@ fun main() {
         else   -> print("Es negativo")
     }
 }
+```
+
+No hace falta que las condiciones sean comparaciones directas: cualquier expresión que devuelva `Boolean` es válida, incluidas llamadas a funciones.
+
+```kotlin
+fun esPar(n: Int) = n % 2 == 0
+
+fun main() {
+    val numero = 8
+    when {
+        esPar(numero) -> print("Es par")
+        numero < 0    -> print("Es negativo")
+        else          -> print("Es impar y positivo")
+    }
+}
+// Salida: Es par
 ```
 
 ---
@@ -165,3 +213,73 @@ fun main() {
 ```
 
 > El `else` es obligatorio como expresión, a menos que las ramas cubran todas las posibilidades posibles (*exhaustive when expression*).
+
+Si una rama necesita más de una instrucción, se agrupa con llaves `{}`. Cuando `when` se usa como expresión, el valor de la rama es el resultado de la **última línea** del bloque.
+
+```kotlin
+val nota = 7
+val comentario = when {
+    nota >= 5 -> {
+        val extra = "¡Bien hecho!"
+        "Aprobado. $extra"   // esta es la línea que se devuelve
+    }
+    else -> "Suspenso"
+}
+```
+
+---
+
+## `when` con `enum class`
+
+Cuando el sujeto es un `enum`, si se cubren todos los valores posibles, el compilador no exige `else`.
+
+```kotlin
+enum class Direccion { NORTE, SUR, ESTE, OESTE }
+
+fun main() {
+    val d = Direccion.ESTE
+    val mensaje = when (d) {
+        Direccion.NORTE -> "Vas hacia arriba"
+        Direccion.SUR   -> "Vas hacia abajo"
+        Direccion.ESTE  -> "Vas hacia la derecha"
+        Direccion.OESTE -> "Vas hacia la izquierda"
+    }
+    print(mensaje)
+}
+// Salida: Vas hacia la derecha
+```
+
+---
+
+## `when` con `sealed class` (exhaustividad real)
+
+El caso más claro de *exhaustive when*: al usar una `sealed class`, el compilador conoce todos los subtipos posibles y exige que estén todos cubiertos, sin necesidad de `else`. Si añades un nuevo subtipo y olvidas su rama, el código **no compila**, lo que ayuda a detectar errores pronto.
+
+```kotlin
+sealed class Resultado
+class Exito(val datos: String) : Resultado()
+class Error(val mensaje: String) : Resultado()
+object Cargando : Resultado()
+
+fun procesar(r: Resultado) = when (r) {
+    is Exito -> "Datos: ${r.datos}"
+    is Error -> "Error: ${r.mensaje}"
+    Cargando -> "Esperando..."
+    // No hace falta 'else': todos los subtipos están cubiertos
+}
+```
+
+---
+
+## Sin fall-through (diferencia clave con Java)
+
+A diferencia del `switch` de Java, en Kotlin **cada rama es independiente**: si una condición se cumple, se ejecuta solo esa rama y se sale de la expresión. No existe el arrastre entre ramas que obliga a usar `break` en Java, ni siquiera si dos condiciones podrían cumplirse a la vez — solo se evalúa la primera que coincide, en orden.
+
+```kotlin
+val n = 2
+when (n) {
+    1, 2 -> print("Uno o dos")
+    2, 3 -> print("Dos o tres")   // nunca se ejecuta si n=2, aunque también encajaría
+}
+// Salida: Uno o dos
+```
