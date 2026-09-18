@@ -140,12 +140,15 @@ fun main() {
 // Ataque:6
 ```
 
-> **Advertencia:** Si se omite el valor final en una rama (por ejemplo, se elimina el `6` del `else`), el compilador infiere el tipo como `Any`, ya que `println()` retorna `Unit`. Para garantizar el tipo entero, declara la variable explícitamente: `val cardAttack: Int`.
+> **Advertencia:** Si se omite el valor final en una rama (por ejemplo, se elimina el `6` del `else`, dejando solo `println("...")`), esa rama pasa a valer `Unit`. El compilador infiere entonces el tipo de `cardAttack` como el supertipo común de `Int` y `Unit`, que es `Any` — no da ningún error, así que el fallo pasa desapercibido. Al ejecutar, como se toma la rama `else`, `cardAttack` termina valiendo `Unit` en tiempo de ejecución:
 
 ```
 // Sin el valor 6 en else:
+...
 Ataque:kotlin.Unit
 ```
+
+> Para detectar este error en tiempo de compilación en vez de en tiempo de ejecución, declara la variable explícitamente: `val cardAttack: Int`. Al asignarle un valor de tipo `Any` (o `Unit`), el compilador lanzará `Type mismatch: inferred type is Any but Int was expected`, revelando el fallo de inmediato.
 
 ---
 
