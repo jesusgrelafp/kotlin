@@ -83,6 +83,19 @@ fun main() {
 // Con input = 40 → Salida: 40 pertenece a [1..49]
 ```
 
+También se puede negar la comprobación con `!in`.
+
+```kotlin
+fun main() {
+    val input = 150
+    when (input) {
+        !in 1..99 -> print("$input está fuera de [1..99]")
+        else      -> print("$input está dentro de [1..99]")
+    }
+}
+// Salida: 150 está fuera de [1..99]
+```
+
 ---
 
 ## Comparar tipos con `when`
@@ -214,6 +227,20 @@ fun main() {
 
 > El `else` es obligatorio como expresión, a menos que las ramas cubran todas las posibilidades posibles (*exhaustive when expression*).
 
+**Sentencia vs. expresión:** esta obligación solo aplica cuando `when` se usa como **expresión** (su resultado se asigna o se retorna). Como **sentencia** (sin usar su resultado), un `when` no exhaustivo es perfectamente válido: si ninguna rama coincide, simplemente no se ejecuta nada y no hay error de compilación.
+
+```kotlin
+fun main() {
+    val nota = 9
+    when (nota) {   // como sentencia, no exige 'else'
+        1 -> print("Insuficiente")
+        2 -> print("Deficiente")
+    }
+    print("Fin")
+}
+// Salida: Fin   (ninguna rama coincide, pero compila y ejecuta sin error)
+```
+
 Si una rama necesita más de una instrucción, se agrupa con llaves `{}`. Cuando `when` se usa como expresión, el valor de la rama es el resultado de la **última línea** del bloque.
 
 ```kotlin
@@ -268,6 +295,26 @@ fun procesar(r: Resultado) = when (r) {
     // No hace falta 'else': todos los subtipos están cubiertos
 }
 ```
+
+---
+
+## Guard conditions: condición extra sobre `is` (Kotlin 2.1+)
+
+Desde Kotlin 2.1 se puede añadir una condición booleana adicional a una rama de comprobación de tipo, usando `is Tipo if condicion ->`. Esto permite distinguir subtipos con matices sin anidar un `if` dentro del cuerpo de la rama.
+
+```kotlin
+sealed class Figura
+class Circulo(val radio: Double) : Figura()
+class Rectangulo(val ancho: Double, val alto: Double) : Figura()
+
+fun describir(f: Figura) = when (f) {
+    is Circulo if f.radio > 10 -> "Círculo grande"
+    is Circulo                 -> "Círculo pequeño"
+    is Rectangulo               -> "Rectángulo"
+}
+```
+
+> Requiere una versión de Kotlin reciente (2.1 o superior); comprueba la versión del compilador antes de usarlo en el aula.
 
 ---
 
