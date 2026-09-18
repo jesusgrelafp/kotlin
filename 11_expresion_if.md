@@ -33,6 +33,36 @@ fun main() {
 // Salida: Se requiere nivel 45. Nivel actual 12
 ```
 
+**Combinar condiciones con `&&`, `||` y `!`:**
+
+```kotlin
+fun main() {
+    val level = 12
+    val hasStaff = true
+    if (level >= 10 && hasStaff) {
+        println("Puedes lanzar el hechizo")
+    } else if (level >= 10 || hasStaff) {
+        println("Casi lo consigues")
+    } else if (!hasStaff) {
+        println("Te falta el báculo")
+    }
+}
+// Salida: Puedes lanzar el hechizo
+```
+
+> Usa paréntesis para dejar clara la precedencia cuando combines `&&` y `||` en la misma condición, ya que `&&` se evalúa antes que `||`.
+
+**`if` de una sola línea:** si el cuerpo de una rama es una única instrucción, las llaves `{}` son opcionales.
+
+```kotlin
+fun main() {
+    val level = 12
+    if (level >= 45) println("Aprendiste Acrobacia")
+    else println("Se requiere nivel 45. Nivel actual $level")
+}
+// Salida: Se requiere nivel 45. Nivel actual 12
+```
+
 ---
 
 ## If como expresión
@@ -60,6 +90,8 @@ println("Ataque:$cardAttack")
 // Salida: Ataque:6
 ```
 
+> **Kotlin no tiene operador ternario.** Si vienes de Java o C, buscarás `condicion ? a : b`; en Kotlin el equivalente directo es `if (condicion) a else b`, tal como se muestra arriba.
+
 ---
 
 ## If y else en expresión
@@ -68,6 +100,21 @@ Cuando se usa `if` como expresión, el `else` es **obligatorio**. Sin él, el co
 
 ```
 'if' must have both main and 'else' branches if used as an expression
+```
+
+**Esto solo aplica cuando `if` se usa como expresión.** Como sentencia (sin usar su resultado), el `else` sigue siendo opcional, igual que vimos con `when`:
+
+```kotlin
+fun main() {
+    val level = 50
+    if (level >= 45) {   // como sentencia, no exige 'else'
+        println("Aprendiste Acrobacia")
+    }
+    println("Fin")
+}
+// Salida:
+// Aprendiste Acrobacia
+// Fin
 ```
 
 ---
@@ -99,3 +146,72 @@ fun main() {
 // Sin el valor 6 en else:
 Ataque:kotlin.Unit
 ```
+
+---
+
+## Smart Cast dentro de un `if`
+
+Cuando compruebas el tipo de una variable con `is` dentro de la condición de un `if`, Kotlin aplica **Smart Cast** automáticamente: dentro de esa rama, la variable ya se trata como el tipo comprobado, sin necesidad de castear manualmente.
+
+```kotlin
+fun describir(x: Any) {
+    if (x is String) {
+        // Aquí 'x' ya se trata como String, sin cast explícito
+        println("Es un String de longitud ${x.length}")
+    } else {
+        println("No es un String")
+    }
+}
+// describir("Hola") → Salida: Es un String de longitud 4
+```
+
+---
+
+## `if` anidado vs. `else if` encadenado
+
+Anidar un `if` dentro de la rama `else` de otro (`else { if (...) { ... } }`) y usar `else if` en cadena producen el mismo resultado, pero `else if` es preferible porque evita el anidamiento creciente y mejora la legibilidad.
+
+```kotlin
+// Anidado (evitar)
+fun clasificarAnidado(nota: Int) {
+    if (nota >= 9) {
+        println("Sobresaliente")
+    } else {
+        if (nota >= 7) {
+            println("Notable")
+        } else {
+            println("Aprobado o menos")
+        }
+    }
+}
+
+// else if encadenado (preferible)
+fun clasificarEncadenado(nota: Int) {
+    if (nota >= 9) {
+        println("Sobresaliente")
+    } else if (nota >= 7) {
+        println("Notable")
+    } else {
+        println("Aprobado o menos")
+    }
+}
+```
+
+---
+
+## Relación con el operador Elvis `?:`
+
+Un patrón muy habitual es usar `if` para dar un valor por defecto cuando algo es `null`:
+
+```kotlin
+val a: String? = null
+val x = if (a != null) a else "valor por defecto"
+```
+
+Kotlin ofrece una forma abreviada de este patrón concreto: el operador Elvis `?:`.
+
+```kotlin
+val x = a ?: "valor por defecto"
+```
+
+> El operador Elvis se explica en detalle en la página dedicada a tipos nulos (*nullability*).
