@@ -57,11 +57,59 @@ fun main() {
 }
 ```
 
+### Rangos numéricos
+
+Los mismos operadores funcionan con números.
+
+```kotlin
+fun main() {
+    // Iteración regular (incluye ambos extremos)
+    for (i in 1..5) print("$i ")                // 1 2 3 4 5
+    println()
+
+    // Excluyendo el límite superior (until)
+    for (i in 0 until 5) print("$i ")           // 0 1 2 3 4
+    println()
+
+    // Con avance (step)
+    for (i in 0..10 step 2) print("$i ")        // 0 2 4 6 8 10
+    println()
+
+    // En reversa (downTo)
+    for (i in 5 downTo 1) print("$i ")          // 5 4 3 2 1
+    println()
+
+    // Reversa con avance
+    for (i in 10 downTo 0 step 2) print("$i ")  // 10 8 6 4 2 0
+}
+```
+
+> **Ojo:** `for (i in 5..1)` no imprime nada, porque el rango `5..1` está vacío. Para contar hacia atrás hay que usar `downTo`.
+
 ---
 
 ## Recorrer un array
 
-Para iterar sobre un arreglo se usan los índices mediante la propiedad `indices`.
+### Directamente sobre los elementos
+
+La forma más habitual es recorrer el array elemento a elemento, sin preocuparse por la posición.
+
+```kotlin
+fun main() {
+    val champions = arrayOf("Teemo", "Ahri", "Vayne", "Brand", "Kindred")
+    for (champion in champions) println(champion)
+}
+// Salida:
+// Teemo
+// Ahri
+// Vayne
+// Brand
+// Kindred
+```
+
+### Con índices (`indices`)
+
+Cuando además del valor se necesita la posición, se usan los índices mediante la propiedad `indices`.
 
 ```kotlin
 fun main() {
