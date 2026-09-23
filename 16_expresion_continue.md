@@ -72,6 +72,7 @@ fun main() {
 }
 
 // Salida:
+
 // Coordenada: (1, 1)
 // Coordenada: (1, 2)
 // Coordenada: (1, 3)
