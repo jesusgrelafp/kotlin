@@ -46,6 +46,20 @@ fun main() {
 Arma 1 (ataque:3, velocidad: 0.5)
 ```
 
+### `val` vs `var` en el constructor
+
+- **`val`** genera solo un **getter**: la propiedad es de solo lectura, no se puede reasignar tras la creación del objeto. Es la opción recomendada por defecto (inmutabilidad).
+- **`var`** genera **getter y setter**: la propiedad se puede modificar después de crear el objeto.
+- Si un parámetro del constructor **no lleva ni `val` ni `var`**, no se convierte en propiedad de la clase: solo existe dentro del propio constructor (por ejemplo, para usarlo en un bloque `init`) y no es accesible como `objeto.parametro`.
+
+```kotlin
+class Persona(val nombre: String)
+
+val p = Persona("Ana")
+p.nombre         // OK, se puede leer
+p.nombre = "Luis" // ERROR de compilación, "nombre" es val
+```
+
 ---
 
 ## Bloques De Inicialización (`init`)
@@ -65,6 +79,35 @@ class Weapon(attack: Int, speed: Double) {
 
 Se usa `this` para distinguir propiedades de parámetros con el mismo nombre.
 
+### Qué está pasando realmente en el ejemplo
+
+- `attack` y `speed` en la cabecera de la clase (sin `val`/`var`) son solo **parámetros** del constructor, no propiedades.
+- Las propiedades `val attack: Int` y `val speed: Double` se declaran aparte, sin valor inicial (Kotlin lo permite si se promete inicializarlas en un `init`).
+- Dentro del `init`, `attack` (sin `this`) se refiere al **parámetro**, mientras que `this.attack` se refiere a la **propiedad de la clase**. Como comparten nombre, el parámetro "tapa" a la propiedad (shadowing), y `this` desambigua.
+- Un `init` se ejecuta en el mismo orden en que aparece en el código, entre las declaraciones de propiedades.
+
+### ¿Cuándo usar este patrón en vez de `val`/`var` directamente?
+
+Para el ejemplo de `Weapon` sin lógica extra, es más simple escribir:
+
+```kotlin
+class Weapon(val attack: Int, val speed: Double)
+```
+
+El patrón con `init` y parámetros "sueltos" tiene sentido cuando hace falta **validar o transformar** el valor antes de asignarlo:
+
+```kotlin
+class Weapon(attack: Int, speed: Double) {
+    val attack: Int
+    val speed: Double
+    init {
+        require(attack >= 0) { "El ataque no puede ser negativo" }
+        this.attack = attack
+        this.speed = speed
+    }
+}
+```
+
 ---
 
 ## Visibilidad Del Constructor
@@ -73,6 +116,31 @@ Se puede cambiar la visibilidad del constructor usando modificadores (`public`, 
 
 ```kotlin
 class Item internal constructor(name: String)
+```
+
+### Los 4 modificadores
+
+- **`public`** (por defecto): visible desde cualquier parte donde la clase sea visible.
+- **`internal`**: solo accesible dentro del mismo módulo (mismo proyecto/módulo de compilación). Fuera del módulo, aunque la clase sea pública, no se puede instanciar directamente.
+- **`protected`**: solo accesible desde la propia clase y sus subclases.
+- **`private`**: solo accesible dentro de la propia clase. Se usa para forzar que la creación de objetos pase por otro mecanismo, como un método de fábrica.
+
+**Nota:** si se aplica un modificador de visibilidad al constructor primario, es obligatorio escribir explícitamente la palabra `constructor`.
+
+### Ejemplo de uso: constructor privado + factory
+
+```kotlin
+class Item private constructor(val name: String) {
+    companion object {
+        fun crear(name: String): Item {
+            require(name.isNotBlank()) { "El nombre no puede estar vacío" }
+            return Item(name)
+        }
+    }
+}
+
+val item = Item.crear("Espada") // OK
+val item2 = Item("Espada")      // ERROR: constructor privado
 ```
 
 ---
