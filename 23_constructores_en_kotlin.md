@@ -159,6 +159,20 @@ class Clase {
 }
 ```
 
+### Por qué existen y la regla de delegación
+
+El constructor primario está en la cabecera de la clase y es único. Los constructores secundarios permiten ofrecer **varias formas de crear un objeto** con distintas combinaciones de parámetros. Si la clase tiene constructor primario, **todo** constructor secundario está obligado a llamarlo, directa o indirectamente, mediante `: this(...)` — Kotlin no permite "saltarse" el primario, ya que ahí se inicializan las propiedades declaradas en la cabecera.
+
+### Orden de ejecución (lo más importante a tener claro)
+
+Cuando se instancia un objeto a través de un constructor secundario, el orden es siempre:
+
+1. Se ejecuta primero la delegación `: this(...)`, es decir, el **constructor primario**.
+2. Como parte de esa ejecución, se disparan las **propiedades y bloques `init`**, en el orden en que aparecen en el cuerpo de la clase.
+3. **Al final**, se ejecuta el **cuerpo del constructor secundario**.
+
+Esto significa que cualquier lógica en un `init` se ejecuta siempre antes que el cuerpo de un constructor secundario, y este último puede sobrescribir valores que el `init` ya haya fijado.
+
 **Ejemplo con constructor primario y secundario:**
 
 ```kotlin
@@ -178,6 +192,13 @@ Instanciación:
 Contact("Erika")
 Contact("C-1", "Mauricio")
 ```
+
+Trazando qué ocurre en cada caso:
+
+- **`Contact("Erika")`** → llama directamente al constructor primario: `name = "Erika"`, y el `init` genera un UUID aleatorio para `id`.
+- **`Contact("C-1", "Mauricio")`** → llama al constructor secundario, que primero delega en el primario vía `: this(name)` (fija `name = "Mauricio"` y el `init` genera igualmente un UUID temporal para `id`); después, ya en el cuerpo del secundario, `this.id = id` **sobrescribe** ese UUID con el valor `"C-1"` recibido como parámetro.
+
+Es decir, en el segundo caso el UUID aleatorio se llega a generar pero se descarta de inmediato: así de estricto es el orden primario+init → cuerpo del secundario.
 
 ---
 
