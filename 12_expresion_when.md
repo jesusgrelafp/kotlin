@@ -283,10 +283,11 @@ fun main() {
 El caso más claro de *exhaustive when*: al usar una `sealed class`, el compilador conoce todos los subtipos posibles y exige que estén todos cubiertos, sin necesidad de `else`. Si añades un nuevo subtipo y olvidas su rama, el código **no compila**, lo que ayuda a detectar errores pronto.
 
 ```kotlin
-sealed class Resultado
-class Exito(val datos: String) : Resultado()
-class Error(val mensaje: String) : Resultado()
-object Cargando : Resultado()
+sealed class Resultado { 
+  class Exito(val datos: String) : Resultado()
+  class Error(val mensaje: String) : Resultado()
+  object Cargando : Resultado()
+}
 
 fun procesar(r: Resultado) = when (r) {
     is Exito -> "Datos: ${r.datos}"
