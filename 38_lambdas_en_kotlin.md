@@ -29,7 +29,7 @@ Las lambdas permiten pasar funciones como argumentos de otras funciones (funcion
 ```kotlin
 fun main() {
     val kCount = "kotlin.kts".count({ char: Char -> char == 'k' })
-    print("Total 'k': $eCount")
+    print("Total 'k': $kCount")
 }
 // Total 'k': 2
 ```
