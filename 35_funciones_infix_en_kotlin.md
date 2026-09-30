@@ -8,23 +8,25 @@ Las funciones `infix` permiten mejorar la legibilidad de la invocación de funci
 
 La palabra reservada `infix` permite llamar a una función insertando su nombre entre dos operandos, en lugar de usar la llamada regular con punto y paréntesis.
 
-Ejemplo con la función `and()`:
+Ejemplo con la función `y()`:
 
 ```kotlin
 fun main() {
     val a = 20
-    print((a >= 0) and (a <= 21))
+    print((a >= 0) y (a <= 21))
 }
 
-public infix fun and(other: Boolean): Boolean
+infix fun Boolean.y(other: Boolean): Boolean {
+    return this && other
+}
 ```
 
 Las siguientes expresiones son equivalentes:
 
 ```kotlin
-a and b
+a y b
 // es igual a
-a.and(b)
+a.y(b)
 ```
 
 ---
